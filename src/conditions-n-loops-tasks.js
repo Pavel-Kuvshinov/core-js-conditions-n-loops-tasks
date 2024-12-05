@@ -113,8 +113,22 @@ function isIsoscelesTriangle(a, b, c) {
  *  10  => X
  *  26  => XXVI
  */
-function convertToRomanNumerals(/* num */) {
-  throw new Error('Not implemented');
+function convertToRomanNumerals(num) {
+  const romanNumbers = [
+    '',
+    'I',
+    'II',
+    'III',
+    'IV',
+    'V',
+    'VI',
+    'VII',
+    'VIII',
+    'IX',
+    'X',
+  ];
+  if (num <= 10) return romanNumbers[num];
+  return `X${convertToRomanNumerals(num - 10)}`;
 }
 
 /**
@@ -132,8 +146,55 @@ function convertToRomanNumerals(/* num */) {
  *  '10,5'    => 'one zero point five'
  *  '1950.2'  => 'one nine five zero point two'
  */
-function convertNumberToString(/* numberStr */) {
-  throw new Error('Not implemented');
+function convertNumberToString(numberStr) {
+  let result = '';
+  for (let i = 0; i < numberStr.length; i += 1) {
+    if (i !== 0) result += ' ';
+    switch (numberStr[i]) {
+      case '.':
+        result += 'point';
+        break;
+      case ',':
+        result += 'point';
+        break;
+      case '-':
+        result += 'minus';
+        break;
+      case '0':
+        result += 'zero';
+        break;
+      case '1':
+        result += 'one';
+        break;
+      case '2':
+        result += 'two';
+        break;
+      case '3':
+        result += 'three';
+        break;
+      case '4':
+        result += 'four';
+        break;
+      case '5':
+        result += 'five';
+        break;
+      case '6':
+        result += 'six';
+        break;
+      case '7':
+        result += 'seven';
+        break;
+      case '8':
+        result += 'eight';
+        break;
+      case '9':
+        result += 'nine';
+        break;
+      default:
+        break;
+    }
+  }
+  return result;
 }
 
 /**
@@ -344,10 +405,32 @@ function rotateMatrix(m) {
  *  [2, 9, 5, 9]    => [2, 5, 9, 9]
  *  [-2, 9, 5, -3]  => [-3, -2, 5, 9]
  */
-function sortByAsc(/* arr */) {
-  throw new Error('Not implemented');
-}
+function sortByAsc(arr) {
+  if (arr.length === 0) return [];
 
+  const ressArr = arr;
+  const a = [];
+  const b = [];
+  const p = arr[0];
+
+  for (let i = 1; i < arr.length; i += 1) {
+    if (arr[i] < p) {
+      a[a.length] = arr[i];
+    } else {
+      b[b.length] = arr[i];
+    }
+  }
+
+  const sortA = sortByAsc(a);
+  const sortB = sortByAsc(b);
+  const sortedArr = [...sortA, p, ...sortB];
+
+  for (let i = 0; i < ressArr.length; i += 1) {
+    ressArr[i] = sortedArr[i];
+  }
+
+  return ressArr;
+}
 /**
  * Shuffles characters in a string so that the characters with an odd index are moved to the end of the string at each iteration.
  * Take into account that the string can be very long and the number of iterations is large. Consider how you can optimize your solution.
@@ -365,8 +448,28 @@ function sortByAsc(/* arr */) {
  *  '012345', 3 => '024135' => '043215' => '031425'
  *  'qwerty', 3 => 'qetwry' => 'qtrewy' => 'qrwtey'
  */
-function shuffleChar(/* str, iterations */) {
-  throw new Error('Not implemented');
+function shuffleChar(str, iterations) {
+  let memStr = str;
+
+  for (let j = 0; j < iterations; j += 1) {
+    let leftChars = '';
+    let rightChars = '';
+
+    for (let i = 0; i < str.length; i += 1) {
+      if (i % 2) {
+        rightChars += memStr[i];
+      } else {
+        leftChars += memStr[i];
+      }
+    }
+    memStr = `${leftChars}${rightChars}`;
+
+    if (memStr === str) {
+      j = iterations - (iterations % (j + 1)) - 1;
+    }
+  }
+
+  return memStr;
 }
 
 /**
